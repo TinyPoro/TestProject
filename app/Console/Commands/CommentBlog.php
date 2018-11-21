@@ -127,7 +127,7 @@ class CommentBlog extends Command
                     'form_params' => [
                         'val' => [
                             'type' => 'blog',
-                            'item_id' => 1,
+                            'item_id' => $blog_id,
                             'text' => $text,
                         ]
                     ]
