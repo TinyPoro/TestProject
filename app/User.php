@@ -36,7 +36,7 @@ class User extends Authenticatable
     }
 
     public function getUserName(){
-        $this->vn_to_str($this->name);
+        return $this->vn_to_str($this->name);
     }
 
     private function vn_to_str ($str){

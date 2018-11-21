@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CrawlName;
+use App\Console\Commands\JoinGroup;
 use App\Console\Commands\LikeBlog;
 use App\Console\Commands\UploadUser;
 use Illuminate\Console\Scheduling\Schedule;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         CrawlName::class,
         UploadUser::class,
         LikeBlog::class,
+        JoinGroup::class,
     ];
 
     /**
