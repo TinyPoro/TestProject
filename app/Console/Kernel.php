@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CrawlFacebook::class,
+        CrawlName::class,
         UploadUser::class,
         LikeBlog::class,
     ];
