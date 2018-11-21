@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\CrawlFacebook;
+use App\Console\Commands\CrawlName;
 use App\Console\Commands\LikeBlog;
 use App\Console\Commands\UploadUser;
 use Illuminate\Console\Scheduling\Schedule;
