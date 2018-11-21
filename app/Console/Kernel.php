@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CommentBlog;
 use App\Console\Commands\CrawlName;
 use App\Console\Commands\JoinGroup;
 use App\Console\Commands\LikeBlog;
@@ -21,6 +22,7 @@ class Kernel extends ConsoleKernel
         UploadUser::class,
         LikeBlog::class,
         JoinGroup::class,
+        CommentBlog::class,
     ];
 
     /**
