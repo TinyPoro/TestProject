@@ -74,10 +74,10 @@ class LikeBlog extends Command
             $access_token = $this->getAccessToken($user);
             if(!$access_token) continue;
 
-            $like_post_ids = $this->getUniqueRandomNumbersWithinRange($this->min_blog_id, $this->max_blog_id, $this->like_per_user);
+            $like_blog_ids = $this->getUniqueRandomNumbersWithinRange($this->min_blog_id, $this->max_blog_id, $this->like_per_user);
 
-            foreach ($like_post_ids as $like_post_id){
-                $liked = $this->likeBlog($access_token, $like_post_id);
+            foreach ($like_blog_ids as $like_blog_id){
+                $liked = $this->likeBlog($access_token, $like_blog_id);
 
                 if($liked){
                     $this->total_likes--;
