@@ -59,7 +59,17 @@ class LikeBlog extends Command
     {
         $users = User::all();
 
-        foreach ($users as $user){
+        while($users->count() > 0 ){
+
+            $count = $users->count();
+
+            $key = $this->getRandom(0, $count - 1);
+
+            $user = $users[$key];
+
+            $users->forget($key);
+
+            $users = $users->values();
 
             $access_token = $this->getAccessToken($user);
             if(!$access_token) continue;
@@ -76,6 +86,10 @@ class LikeBlog extends Command
                 }
             }
         }
+    }
+
+    private function getRandom($min = 0, $max ){
+        return rand($min, $max);
     }
 
     public function getUniqueRandomNumbersWithinRange($min, $max, $quantity) {
