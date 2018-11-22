@@ -24,13 +24,13 @@ class LikeBlog extends Command
     protected $description = 'Command description';
 
     private $client;
-//    private $client_id = 'app-toppick';
-    private $client_id = '1';
-//    private $client_secret = '4409970dbafd2e0d53a4eb0ecb9bd3e84559a05c';
-    private $client_secret = '8a7c32a3b8de072fa276e1a7adf0260bdb6e90e8';
-//
-//    private $host = 'https://phpfoxdev.toppick.vn';
-    private $host = 'http://phpfox.net';
+    private $client_id = 'app-toppick';
+//    private $client_id = '1';
+    private $client_secret = '4409970dbafd2e0d53a4eb0ecb9bd3e84559a05c';
+//    private $client_secret = '8a7c32a3b8de072fa276e1a7adf0260bdb6e90e8';
+
+    private $host = 'https://phpfoxdev.toppick.vn';
+//    private $host = 'http://phpfox.net';
 
     /**
      * Create a new command instance.
@@ -44,11 +44,12 @@ class LikeBlog extends Command
         $this->client = new Client();
     }
 
-    private $total_likes = 10000000;
-    private $like_per_user = 2;
+    private $total_likes = 400000000;
+    private $liked = 0;
+    private $like_per_user = 6000;
 
-    private $min_blog_id = 1;
-    private $max_blog_id = 4;
+    private $min_blog_id = 31;
+    private $max_blog_id = 10851;
 
     /**
      * Execute the console command.
@@ -74,15 +75,17 @@ class LikeBlog extends Command
             $access_token = $this->getAccessToken($user);
             if(!$access_token) continue;
 
-            $like_blog_ids = $this->getUniqueRandomNumbersWithinRange($this->min_blog_id, $this->max_blog_id, $this->like_per_user);
+            $like_blog_ids = $this->getUniqueRandomNumbersWithinRange($this->min_blog_id, $this->max_blog_id);
 
             foreach ($like_blog_ids as $like_blog_id){
                 $liked = $this->likeBlog($access_token, $like_blog_id);
 
                 if($liked){
-                    $this->total_likes--;
+                    $this->liked++;
 
-                    if($this->total_likes === 0) return;
+                    if( $this->liked % 50000 === 0) dump("Đã like ".$this->liked);
+
+                    if($this->total_likes === $this->liked) return;
                 }
             }
         }
@@ -92,9 +95,12 @@ class LikeBlog extends Command
         return rand($min, $max);
     }
 
-    public function getUniqueRandomNumbersWithinRange($min, $max, $quantity) {
+    public function getUniqueRandomNumbersWithinRange($min, $max) {
         $numbers = range($min, $max);
         shuffle($numbers);
+
+        $quantity = $this->getRandom(200, $this->like_per_user);
+
         return array_slice($numbers, 0, $quantity);
     }
 
