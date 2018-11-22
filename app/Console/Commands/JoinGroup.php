@@ -80,8 +80,7 @@ class JoinGroup extends Command
 
             foreach ($join_group_ids as $join_group_id){
                 $joined = $this->joinGroup($access_token, $join_group_id);
-                dump("Join: ".$user->getUserName()." voi group id " . $join_group_id);
-                dump("Ket qua: ".$joined);
+
                 if($joined){
                     $this->total_joins--;
 
@@ -122,6 +121,8 @@ class JoinGroup extends Command
 
             $join_group_ids[] = $join_group_id;
         }
+
+        $join_group_ids = array_unique($join_group_ids);
 
         return $join_group_ids;
     }
