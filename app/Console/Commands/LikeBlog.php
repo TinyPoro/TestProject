@@ -154,7 +154,6 @@ class LikeBlog extends Command
 
             return $access_token;
         }catch (GuzzleException $e){
-            dump($e->getMessage());
 
             return false;
         }

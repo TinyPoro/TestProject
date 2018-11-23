@@ -118,11 +118,9 @@ class UploadUser extends Command
 
             return $data->status === "success";
         }catch (GuzzleException $e){
-            dump($e->getMessage());
 
             return false;
         }catch (\Exception $e){
-            dump($e->getMessage());
 
             return false;
         }
@@ -153,7 +151,6 @@ class UploadUser extends Command
 
             return $access_token;
         }catch (GuzzleException $e){
-            dump($e->getMessage());
 
             return false;
         }
