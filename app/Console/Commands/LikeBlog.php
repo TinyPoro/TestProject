@@ -84,7 +84,7 @@ class LikeBlog extends Command
                     $this->liked++;
 
                     if( $this->liked % 50000 === 0) {
-                        $log_file = fopen("comment_log.txt", "w") or die("Unable to open file!");
+                        $log_file = fopen("like_log.txt", "w") or die("Unable to open file!");
                         fwrite($log_file, "Đã like ".$this->liked);
                         fclose($log_file);
                     }
