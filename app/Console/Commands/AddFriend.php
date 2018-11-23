@@ -45,7 +45,7 @@ class AddFriend extends Command
 
     private $total_requests = 400000000;
     private $requested = 0;
-    private $request_per_user = 6000;
+    private $request_per_user = 5000;
 
     private $global_access_token = null;
     private $global_username = 'tunglt4@topica.edu.vn';
@@ -74,7 +74,7 @@ class AddFriend extends Command
 
         foreach($this->user_ids as $user_id ){
 
-            $friend_ids = $this->getRandomFriendIds($this->request_per_user, $user_id);
+            $friend_ids = $this->getRandomFriendIds($user_id);
 
             foreach ($friend_ids as $friend_id){
                 $requested = $this->addFriend($user_id, $this->access_tokens[$user_id], $friend_id, $this->access_tokens[$friend_id]);
@@ -206,11 +206,17 @@ class AddFriend extends Command
         }
     }
 
-    private function getRandomFriendIds($quantity, $except){
+    private function getRandom($min = 0, $max ){
+        return rand($min, $max);
+    }
+
+    private function getRandomFriendIds($except){
         $min = 0;
         $max = count($this->user_ids) - 1;
 
         $friend_ids=[];
+
+        $quantity = $this->getRandom(200, $this->request_per_user);
 
         $random_keys = $this->getUniqueRandomNumbersWithinRange($min, $max, $quantity);
 
