@@ -54,6 +54,8 @@ class CommentBlog extends Command
     private $comment_path = 'comments.txt';
     private $comments = [];
 
+    private $friend_names = [];
+
     /**
      * Execute the console command.
      *
@@ -80,6 +82,8 @@ class CommentBlog extends Command
             $access_token = $this->getAccessToken($user);
             if(!$access_token) continue;
 
+            $this->friend_names = $this->getListFriendName($access_token);
+
             $comment_blog_ids = $this->getUniqueRandomNumbersWithinRange($this->min_blog_id, $this->max_blog_id);
 
             foreach ($comment_blog_ids as $comment_blog_id){
@@ -93,6 +97,8 @@ class CommentBlog extends Command
                     if($this->total_comments === $this->commented) return;
                 }
             }
+
+            $this->friend_names = [];
         }
     }
 
@@ -124,7 +130,7 @@ class CommentBlog extends Command
 
     private function commentBlog( $access_token, $blog_id ){
         try{
-            $text = $this->getRandomText($access_token);
+            $text = $this->getRandomText();
 
             $response = $this->client->request(
                 'POST',
@@ -152,13 +158,13 @@ class CommentBlog extends Command
         }
     }
 
-    private function getRandomText($access_token){
+    private function getRandomText(){
         shuffle( $this->comments);
 
         $text = array_get($this->comments, 0 , 'Bài viết hay quá!');
         if($text === "friend") {
 
-            $text = $this->getTagFriend($access_token);
+            $text = $this->getTagFriend();
 
             if(!$text) $text = 'Bài viết hay quá!';
         }
@@ -166,19 +172,18 @@ class CommentBlog extends Command
         return $text;
     }
 
-    private function getTagFriend($access_token){
-        $name = $this->getRandomFriendName($access_token);
+    private function getTagFriend(){
+        $name = $this->getRandomFriendName();
 
         if(is_null($name)) return false;
 
         return "[user=12]".$name."[/user]";
     }
 
-    private function getRandomFriendName($access_token){
-        $friend_names = $this->getListFriendName($access_token);
-        shuffle($friend_names);
+    private function getRandomFriendName(){
+        shuffle($this->friend_names);
 
-        return array_get($friend_names, 0 , null);
+        return array_get($this->friend_names, 0 , null);
     }
 
     private function getListFriendName($access_token){
