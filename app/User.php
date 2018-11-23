@@ -75,7 +75,7 @@ class User extends Authenticatable
 
         foreach($unicode as $nonUnicode=>$uni){
 
-            $str = preg_replace("/($uni)/i", $nonUnicode, $str);
+            $str = preg_replace("/($uni)/iu", $nonUnicode, $str);
 
         }
         $str = str_replace(' ','_',$str);
