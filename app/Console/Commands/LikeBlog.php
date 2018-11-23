@@ -79,11 +79,15 @@ class LikeBlog extends Command
 
             foreach ($like_blog_ids as $like_blog_id){
                 $liked = $this->likeBlog($access_token, $like_blog_id);
-
+                dump("User ".$user->getUserName()." like $like_blog_id!");
                 if($liked){
                     $this->liked++;
 
-                    if( $this->liked % 50000 === 0) dump("Đã like ".$this->liked);
+                    if( $this->liked % 50000 === 0) {
+                        $log_file = fopen("comment_log.txt", "w") or die("Unable to open file!");
+                        fwrite($log_file, "Đã like ".$this->liked);
+                        fclose($log_file);
+                    }
 
                     if($this->total_likes === $this->liked) return;
                 }
