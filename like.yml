@@ -1,0 +1,9 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'comment'
+    interpreter : /bin/php
+    cwd : ./
+    exec_mode: fork
+    args : like:blog
+    log_date_format : YYYYMMDDHHmm
