@@ -1,7 +1,7 @@
 apps:
 ## DECOMPRESS
   - script : ./artisan
-    name     : 'comment'
+    name     : 'like'
     interpreter : /bin/php
     cwd : ./
     exec_mode: fork
