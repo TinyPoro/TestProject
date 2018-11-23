@@ -1,0 +1,9 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'friend_request'
+    interpreter : /bin/php
+    cwd : ./
+    exec_mode: fork
+    args : add:friend
+    log_date_format : YYYYMMDDHHmm
