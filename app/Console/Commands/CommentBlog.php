@@ -88,11 +88,15 @@ class CommentBlog extends Command
 
             foreach ($comment_blog_ids as $comment_blog_id){
                 $commented = $this->commentBlog($access_token, $comment_blog_id);
-
+                dump("User ".$user->getUserName()." comment on $comment_blog_id!");
                 if($commented){
                     $this->commented++;
 
-                    if( $this->commented % 10000 === 0) dump("Đã comment ".$this->commented);
+                    if( $this->commented % 10000 === 0) {
+                        $log_file = fopen("comment_log.txt", "w") or die("Unable to open file!");
+                        fwrite($log_file, "Đã comment ".$this->commented);
+                        fclose($log_file);
+                    }
 
                     if($this->total_comments === $this->commented) return;
                 }
