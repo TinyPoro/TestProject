@@ -48,8 +48,8 @@ class CommentBlog extends Command
     private $commented = 0;
     private $comment_per_user = 6000;
 
-    private $min_blog_id = 31;
-    private $max_blog_id = 10851;
+    private $min_blog_id = 10852;
+    private $max_blog_id = 21381;
 
     private $comment_path = 'comments.txt';
     private $comments = [];
@@ -98,7 +98,7 @@ class CommentBlog extends Command
                         fclose($log_file);
                     }
 
-                    if($this->total_comments === $this->commented) return;
+                    if($this->total_comments < $this->commented) return;
                 }
             }
 
