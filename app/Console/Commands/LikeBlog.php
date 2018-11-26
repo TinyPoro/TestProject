@@ -49,7 +49,7 @@ class LikeBlog extends Command
     private $like_per_user = 6000;
 
     private $min_blog_id = 31;
-    private $max_blog_id = 10851;
+    private $max_blog_id = 21381;
 
     /**
      * Execute the console command.
