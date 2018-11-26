@@ -63,9 +63,11 @@ class CrawlName extends Command
     public function handle()
     {
 
-        $this->getLastName1();
-        $this->getLastName2();
-        $this->getLastName3();
+//        $this->getLastName1();
+//        $this->getLastName2();
+//        $this->getLastName3();
+//        $this->getLastName4();
+        $this->getLastName5();
 
     }
 
@@ -127,13 +129,57 @@ class CrawlName extends Command
         });
     }
 
-    private function genName( $last_name ){
+    private function getLastName4(){
+        $client = new Client();
+
+        $response = $client->get("http://www.ten-be.com/c/T%C3%AAn%20ti%E1%BA%BFng%20Anh%20ph%E1%BB%95%20bi%E1%BA%BFn");
+
+        $html = $response->getBody()->getContents();
+
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($html);
+
+        $invalids = [
+            '    Tên',
+        ];
+
+        $crawler->filter('table tr td:nth-child(2)')->each( function( Crawler $node) use( $invalids){
+            $last_name = trim($node->text());
+
+            if(in_array($last_name, $invalids)){
+
+                return;
+            }
+
+            $this->genName( $last_name, true );
+        });
+    }
+
+    private function getLastName5(){
+        $client = new Client();
+
+        $response = $client->get("https://giasutoeic.com/ten-tieng-anh/");
+
+        $html = $response->getBody()->getContents();
+
+        $crawler = new Crawler();
+        $crawler->addHtmlContent($html);
+
+        $crawler->filter('table tr td:nth-child(1)')->each( function( Crawler $node){
+            $last_name = trim($node->text());
+
+            $this->genName( $last_name, true );
+        });
+    }
+
+    private function genName( $last_name, $reverse = false ){
 
         $last_name = trim($last_name);
 
         foreach ( $this->ho as $ho ){
 
-            $name = "$ho $last_name";
+            if($reverse) $name = "$last_name $ho";
+            else $name = "$ho $last_name";
             $email = $this->genEmail($name);
 
             try{
@@ -193,7 +239,7 @@ class CrawlName extends Command
 
             'A'=>'Á|À|Ả|Ã|Ạ|Ă|Ắ|Ặ|Ằ|Ẳ|Ẵ|Â|Ấ|Ầ|Ẩ|Ẫ|Ậ',
 
-            'D'=>'Đ',
+            'D'=>'Đ|Ð',
 
             'E'=>'É|È|Ẻ|Ẽ|Ẹ|Ê|Ế|Ề|Ể|Ễ|Ệ',
 
