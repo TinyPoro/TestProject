@@ -67,7 +67,8 @@ class CrawlName extends Command
 //        $this->getLastName2();
 //        $this->getLastName3();
 //        $this->getLastName4();
-        $this->getLastName5();
+//        $this->getLastName5();
+        $this->getLastName6();
 
     }
 
@@ -170,6 +171,26 @@ class CrawlName extends Command
 
             $this->genName( $last_name, true );
         });
+    }
+
+    private function getLastName6(){
+        $data = file_get_contents("lib_name.txt");
+
+        $name_datas = json_decode($data);
+
+        foreach ($name_datas as $name_data){
+            $name = $name_data->full_name;
+            $email = $this->genEmail($name);
+
+            try{
+                User::create([
+                    'name' => $name,
+                    'email' => $email,
+                ]);
+            } catch ( \Exception $e){
+                continue;
+            }
+        }
     }
 
     private function genName( $last_name, $reverse = false ){
