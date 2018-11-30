@@ -10,7 +10,7 @@ class Category extends Model
         'name', 'parent_id'
     ];
 
-    public function posts(){
-        return $this->hasMany('App\Post');
+    public function sites(){
+        return $this->hasMany('App\Site');
     }
 }

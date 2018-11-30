@@ -10,7 +10,7 @@ class Site extends Model
     const FEED_TYPE = 1;
 
     protected $fillable = [
-        'url', 'rule', 'type'
+        'url', 'rule', 'type', 'category_id'
     ];
 
     public function tasks(){
@@ -19,5 +19,13 @@ class Site extends Model
 
     public function crawl_histories(){
         return $this->hasMany('App\CrawlHistory');
+    }
+
+    public function category(){
+        return $this>$this->belongsTo('App\Category');
+    }
+
+    public function posts(){
+        return $this->hasMany('App\Post');
     }
 }
