@@ -15,7 +15,7 @@ class CreateCrawlHistoriesTable extends Migration
     {
         Schema::create('crawl_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('task_id');
+            $table->integer('task_id')->index();
             $table->integer('attempt');
             $table->integer('post_crawled')->default(0);
             $table->timestamps();

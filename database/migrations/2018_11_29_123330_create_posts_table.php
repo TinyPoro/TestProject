@@ -17,8 +17,8 @@ class CreatePostsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('content');
-            $table->integer('crawl_history_id');
-            $table->integer('category_id');
+            $table->integer('crawl_history_id')->index();
+            $table->integer('site_id')->index();
             $table->timestamps();
         });
     }

@@ -15,9 +15,11 @@ class CreateSiteTable extends Migration
     {
         Schema::create('sites', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('url')->unique();
+            $table->text('url');
+            $table->string('md5_url')->unique();
             $table->text('rule')->nullable();
-            $table->integer('type'); //['normal', 'feed']
+            $table->integer('type')->index(); //['normal', 'feed']
+            $table->integer('category_id')->index();
             $table->timestamps();
         });
     }
