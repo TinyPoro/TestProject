@@ -20,6 +20,7 @@ class CreateSiteTable extends Migration
             $table->text('rule')->nullable();
             $table->integer('type')->index(); //['normal', 'feed']
             $table->integer('category_id')->index();
+            $table->integer('driver')->index();
             $table->timestamps();
         });
     }
