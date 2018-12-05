@@ -1,0 +1,154 @@
+#graph_viewer_wrap{
+  position: relative;
+  #redraw_graph{
+    position: absolute;
+    top:5px;
+    right: 5px;
+    color: #333;
+    cursor: pointer;
+  }
+}
+
+#context_buttons{
+  button{
+    text-align: left;
+  }
+}
+
+#graph_viewer {
+  position: relative;
+  #context_buttons {
+    position: absolute;
+  }
+}
+
+#info-and-editor {
+  min-height: 400px;
+
+}
+
+.selected_path_view {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  background: #f1f1f1;
+  border-top-left-radius: 5px;
+  padding: 10px;
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 3px 0;
+      background: #fff;
+      padding: 3px;
+      list-style: none;
+      &:hover {
+        background: #ccc;
+      }
+    }
+  }
+}
+
+.no-top-radius{
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.no-bottom-radius{
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.table-report{
+  td,th{
+    padding: 3px;
+    font-size: 80%;
+    line-height:1em;
+    vertical-align: middle;
+  }
+  th{
+    padding: 10px 5px;
+    text-align: center;
+    a{
+      display: block;
+      padding: 10px 5px;
+      margin: -10px -5px;
+    }
+  }
+}
+
+
+/** Task controls **/
+.task-controls{
+  i{
+    cursor: pointer;
+  }
+}
+
+
+
+.img-to-position{
+  a{
+    i{
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+}
+.area-fixed{
+  padding: 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  position: fixed;
+  z-index: 1000;
+  right: 15px;
+  top: 50%;
+  opacity: 0.5;
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.list-report{
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  color: $brand-primary;
+  ul{
+    padding-left: 5px;
+    list-style: disc;
+  }
+  li{
+    padding: 3px 0;
+  }
+}
+
+.form-sm{
+  .form-control {
+    padding: $input-padding-y-sm $input-padding-x-sm;
+    font-size: $font-size-sm;
+    @include border-radius($input-border-radius-sm);
+  }
+
+  select.form-control {
+    &:not([size]):not([multiple]) {
+      height: $input-height-sm;
+    }
+  }
+
+  .btn {
+    // line-height: ensure proper height of button next to small input
+    @include button-size($btn-padding-y-sm, $btn-padding-x-sm, $font-size-sm, $btn-border-radius-sm);
+  }
+}
+
+.blinking{
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+.content img{
+  max-width: 98%;
+}

@@ -1,0 +1,52 @@
+a.ac_iframe{
+  display: block;
+  border: 1px solid #cccccc;
+  min-height: 40px;
+  padding: 10px;
+  font-weight:bold;
+}
+
+
+.ac_selected_path_view {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  background: #f1f1f1;
+  border-top-left-radius: 5px;
+  padding: 10px;
+  ul {
+    margin: 0;
+    padding: 0;
+    li {
+      margin: 3px 0;
+      background: #fff;
+      padding: 3px;
+      list-style: none;
+      &:hover {
+        background: #ccc;
+      }
+    }
+  }
+}
+.ac_inspected{
+  outline:2px solid #00b3ee;
+  border:2px solid #0F6AB4;
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% { opacity: 0; }
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  position: inherit;
+  right: 0px;
+  margin-right: 0px;
+  height: 0;
+}
+
+.crwl_show{
+  display: inherit !important;
+  visibility: visible !important;
+}
