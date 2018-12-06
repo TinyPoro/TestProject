@@ -1,0 +1,11 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'hoc247_content'
+    interpreter : /usr/bin/php
+    cwd : ./
+    exec_mode: fork
+    args : run:crawler_sm --collect content --site hoc247
+    autorestart : true
+    restart_delay : 1800000
+    log_date_format : YYYYMMDDHHmm

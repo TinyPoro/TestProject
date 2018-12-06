@@ -1,0 +1,9 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'easyuni_post'
+    interpreter : /usr/bin/php
+    cwd : ./
+    exec_mode: fork
+    args : run:crawler_news --collect post --site easyuni
+    log_date_format : YYYYMMDDHHmm

@@ -1,0 +1,11 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'lgh_post'
+    interpreter : /usr/bin/php
+    cwd : ./
+    exec_mode: fork
+    args : run:crawler --collect post --site loigiaihay
+    autorestart : true
+    restart_delay : 1800000
+    log_date_format : YYYYMMDDHHmm

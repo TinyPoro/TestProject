@@ -1,0 +1,11 @@
+apps:
+## DECOMPRESS
+  - script : ./artisan
+    name     : 'vj_content'
+    interpreter : /usr/bin/php
+    cwd : ./
+    exec_mode: fork
+    args : run:crawler --collect content --site vietjack
+    autorestart : true
+    restart_delay : 1800000
+    log_date_format : YYYYMMDDHHmm
