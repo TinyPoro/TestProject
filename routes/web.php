@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('media/{type}/{id}/{name}', 'Api\V1\MultipartController@showFile')->name('show.file');
