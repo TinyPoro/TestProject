@@ -53,6 +53,7 @@ class MultipartController extends Controller
             $media_content = file_get_contents($url);
         }
         $input_path = $this->newTmp($media_content, $dir);
+        $input_path = $this->renameImage($input_path);
         $input_name = basename($input_path);
 
         $response['data'] = route('show.file', [
@@ -63,6 +64,26 @@ class MultipartController extends Controller
         $response['message'] = "OK";
 
         return response()->json($response);
+    }
+
+    function renameImage($originalImage)
+    {
+        $image_type = getimagesize($originalImage)['mime'];
+
+        if ($image_type === 'image/jpeg')
+            $new_name = "$originalImage.jpg";
+        else if ($image_type === 'image/png')
+            $new_name = "$originalImage.png";
+        else if ($image_type === 'image/gif')
+            $new_name = "$originalImage.gif";
+        else if ($image_type === 'image/bmp')
+            $new_name = "$originalImage.bmp";
+        else
+            $new_name = $originalImage;
+
+        rename($originalImage, $new_name);
+
+        return $new_name;
     }
 
     public function showFile($type, $id, $filename){
