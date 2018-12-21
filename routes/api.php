@@ -24,4 +24,9 @@ Route::group(['prefix' => 'v1', 'namespace' => 'Api\V1'], function(){
         'uses' => 'MultipartController@postMedia'
     ]);
 
+    Route::post('upload_multipart', [
+        'as' => 'api.upload_multipart',
+        'uses' => 'MultipartController@uploadMedia'
+    ]);
+
 });
