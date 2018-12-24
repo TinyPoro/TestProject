@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 use Illuminate\Http\Request;
 
 class MultipartController extends Controller
@@ -95,6 +97,8 @@ class MultipartController extends Controller
 
         $input_path = $this->newTmp($media_content, $dir);
         $input_path = $this->renameImage($input_path);
+        $input_path = $this->removeWatermark($input_path);
+        $input_path = $this->desaturateImage($input_path);
         $input_name = basename($input_path);
 
         $response['data'] = route('show.file', [
@@ -105,6 +109,33 @@ class MultipartController extends Controller
         $response['message'] = "OK";
 
         return response()->json($response);
+    }
+
+    function removeWatermark($path){
+        $data = file_get_contents($path);
+        $base64 = base64_encode($data);
+
+        $client = new Client();
+
+        $response = $client->post('42.113.207.172:4747/remove/watermark', [
+            RequestOptions::JSON => ['image' => $base64]
+        ]);
+
+        $res = json_decode($response->getBody()->getContents());
+        $base64 = $res->result;
+
+        file_put_contents($path, base64_decode($base64));
+
+        return $path;
+    }
+
+    function desaturateImage($path){
+        $src = imagecreatefromjpeg($path);
+        imagecopymergegray($src, $src, 0, 0, 0, 0, imagesx($src), imagesy($src), 0);
+        imagePNG($src, $path, 0);
+        imagedestroy($src);
+
+        return $path;
     }
 
     function renameImage($originalImage)
