@@ -119,14 +119,18 @@ class MultipartController extends Controller
 
         $client = new Client();
 
-        $response = $client->post('42.113.207.172:4747/remove/watermark', [
-            RequestOptions::JSON => ['image' => $base64]
-        ]);
+        try{
+            $response = $client->post('42.113.207.172:4747/remove/watermark', [
+                RequestOptions::JSON => ['image' => $base64]
+            ]);
 
-        $res = json_decode($response->getBody()->getContents());
-        $base64 = $res->result;
+            $res = json_decode($response->getBody()->getContents());
+            $base64 = $res->result;
 
-        file_put_contents($path, base64_decode($base64));
+            file_put_contents($path, base64_decode($base64));
+        }catch (\Exception $e){
+
+        }
 
         return $path;
     }
