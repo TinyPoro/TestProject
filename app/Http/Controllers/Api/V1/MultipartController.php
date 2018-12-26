@@ -56,6 +56,7 @@ class MultipartController extends Controller
         }
         $input_path = $this->newTmp($media_content, $dir);
         $input_path = $this->renameImage($input_path);
+        $input_path = $this->convertImage($input_path);
         $input_path = $this->removeWatermark($input_path);
         $input_path = $this->desaturateImage($input_path);
         $input_name = basename($input_path);
@@ -99,6 +100,7 @@ class MultipartController extends Controller
 
         $input_path = $this->newTmp($media_content, $dir);
         $input_path = $this->renameImage($input_path);
+        $input_path = $this->convertImage($input_path);
         $input_path = $this->removeWatermark($input_path);
         $input_path = $this->desaturateImage($input_path);
         $input_name = basename($input_path);
@@ -111,6 +113,39 @@ class MultipartController extends Controller
         $response['message'] = "OK";
 
         return response()->json($response);
+    }
+
+    function convertImage($originalImage, $quality = 100)
+    {
+        $ext = exif_imagetype($originalImage);
+
+        if ($ext === IMAGETYPE_JPEG) {
+            $imageTmp=imagecreatefromjpeg($originalImage);
+            $outputImage = str_replace('.jpeg', '.jpg', $originalImage);
+        }
+        else if ($ext === IMAGETYPE_PNG) {
+            $imageTmp=imagecreatefrompng($originalImage);
+            $outputImage = str_replace('.png', '.jpg', $originalImage);
+
+        }
+        else if ($ext === IMAGETYPE_GIF) {
+            $imageTmp=imagecreatefromgif($originalImage);
+            $outputImage = str_replace('.gif', '.jpg', $originalImage);
+
+        }
+        else if ($ext === IMAGETYPE_BMP) {
+            $imageTmp=imagecreatefrombmp($originalImage);
+            $outputImage = str_replace('.bmp', '.jpg', $originalImage);
+
+        }
+        else
+            return $originalImage;
+
+        // quality is a value from 0 (worst) to 100 (best)
+        imagejpeg($imageTmp, $outputImage, $quality);
+        imagedestroy($imageTmp);
+
+        return $outputImage;
     }
 
     function removeWatermark($path){
