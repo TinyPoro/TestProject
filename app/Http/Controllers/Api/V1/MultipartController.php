@@ -59,6 +59,7 @@ class MultipartController extends Controller
         $input_path = $this->convertImage($input_path);
         $input_path = $this->removeWatermark($input_path);
         $input_path = $this->desaturateImage($input_path);
+        $input_path = $this->convertImage($input_path);
         $input_name = basename($input_path);
 
         $response['data'] = route('show.file', [
@@ -103,6 +104,7 @@ class MultipartController extends Controller
         $input_path = $this->convertImage($input_path);
         $input_path = $this->removeWatermark($input_path);
         $input_path = $this->desaturateImage($input_path);
+        $input_path = $this->convertImage($input_path);
         $input_name = basename($input_path);
 
         $response['data'] = route('show.file', [
