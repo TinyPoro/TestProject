@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class MultipartController extends Controller
 {
     public function __construct(){
-        $media_path = storage_path('Media');
+        $media_path = storage_path('Media_test');
 
         if(!is_dir($media_path)){
             @mkdir($media_path);
@@ -222,7 +222,7 @@ class MultipartController extends Controller
             $id_dir = "problem_id_$id";
         }
 
-        $dir = storage_path("Media/$type_dir/$id_dir/");
+        $dir = storage_path("Media_test/$type_dir/$id_dir/");
 
         if(!is_dir($dir)){
             @mkdir($dir);
