@@ -202,7 +202,7 @@ class MultipartController extends Controller
     }
 
     public function showFile($type, $id, $filename){
-        $dir = $this->getDir($type, $id);
+        $dir = $this->getDir1($type, $id);
         $pathToFile = $dir."/$filename";
 
         if(file_exists($pathToFile)) return response()->file($pathToFile);
@@ -223,6 +223,28 @@ class MultipartController extends Controller
         }
 
         $dir = storage_path("Media_test/$type_dir/$id_dir/");
+
+        if(!is_dir($dir)){
+            @mkdir($dir);
+        }
+
+        return $dir;
+    }
+
+    private function getDir1(&$type, $id){
+        if($type == "Solutions"){
+            $type = $type_dir = "Solutions";
+        }else{
+            $type = $type_dir = "Problems";
+        }
+
+        if($type_dir == "Solutions"){
+            $id_dir = "solution_id_$id";
+        }else{
+            $id_dir = "problem_id_$id";
+        }
+
+        $dir = storage_path("Media/$type_dir/$id_dir/");
 
         if(!is_dir($dir)){
             @mkdir($dir);
