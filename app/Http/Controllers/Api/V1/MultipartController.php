@@ -233,7 +233,7 @@ class MultipartController extends Controller
 
     protected function newTmp($input = null, $dir, $is_content = true, $wm = 'w+'){
 
-        $filename = tempnam($dir, 'Topkid');
+        $filename = @tempnam($dir, 'Topkid');
 
         if($input != null){
             if(is_resource($input)){
