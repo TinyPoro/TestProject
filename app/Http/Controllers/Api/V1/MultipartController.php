@@ -33,7 +33,7 @@ class MultipartController extends Controller
         if(!$url) {
             $response['message'] = "No url received!";
 
-            return $request->json($response);
+            return response()->json($response);
         }
 
         $type = $request->get('type');
@@ -42,7 +42,7 @@ class MultipartController extends Controller
         if(!$id) {
             $response['message'] = "No id received!";
 
-            return $request->json($response);
+            return response()->json($response);
         }
 
         $dir = $this->getDir($type, $id);
@@ -83,7 +83,7 @@ class MultipartController extends Controller
         if(!$resource) {
             $response['message'] = "No resource received!";
 
-            return $request->json($response);
+            return response()->json($response);
         }
 
         $type = $request->get('type');
@@ -92,12 +92,57 @@ class MultipartController extends Controller
         if(!$id) {
             $response['message'] = "No id received!";
 
-            return $request->json($response);
+            return response()->json($response);
         }
 
         $dir = $this->getDir($type, $id);
 
         $media_content = file_get_contents($resource);
+
+        $input_path = $this->newTmp($media_content, $dir);
+        $input_path = $this->renameImage($input_path);
+        $input_path = $this->convertImage($input_path);
+        $input_path = $this->removeWatermark($input_path);
+        $input_path = $this->desaturateImage($input_path);
+        $input_path = $this->convertImage($input_path);
+        $input_name = basename($input_path);
+
+        $response['data'] = route('show.file', [
+            'type' => $type,
+            'id' => $id,
+            'name' => $input_name
+        ]);
+        $response['message'] = "OK";
+
+        return response()->json($response);
+    }
+
+    public function uploadMedia1(Request $request){
+        $response = [
+            'data' => [],
+            'message' => ""
+        ];
+
+        $resource = $request->get('file');
+
+        if(!$resource) {
+            $response['message'] = "No resource received!";
+
+            return response()->json($response);
+        }
+
+        $type = $request->get('type');
+        $id = $request->get('id');
+
+        if(!$id) {
+            $response['message'] = "No id received!";
+
+            return response()->json($response);
+        }
+
+        $dir = $this->getDir($type, $id);
+
+        $media_content = $resource;
 
         $input_path = $this->newTmp($media_content, $dir);
         $input_path = $this->renameImage($input_path);
