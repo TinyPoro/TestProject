@@ -25,7 +25,7 @@ class MultipartController extends Controller
 
     public function postMedia(Request $request){
         $response = [
-            'data' => [],
+            'data' => '',
             'message' => ""
         ];
 
@@ -74,7 +74,7 @@ class MultipartController extends Controller
 
     public function uploadMedia(Request $request){
         $response = [
-            'data' => [],
+            'data' => '',
             'message' => ""
         ];
 
@@ -119,7 +119,7 @@ class MultipartController extends Controller
 
     public function uploadMedia1(Request $request){
         $response = [
-            'data' => [],
+            'data' => '',
             'message' => ""
         ];
 
