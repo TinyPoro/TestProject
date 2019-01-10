@@ -256,4 +256,10 @@ class MultipartController extends Controller
         }
         return $filename;
     }
+
+    public function __destruct()
+    {
+        $media_path = storage_path('Media');
+        chmod($media_path, 0775);
+    }
 }
