@@ -192,8 +192,6 @@ class MultipartController extends Controller
         $input_path = $this->newTmp($media_content, $dir);
         $input_path = $this->renameImage($input_path);
         $input_path = $this->convertImage($input_path);
-        $input_path = $this->removeWatermark($input_path);
-        $input_path = $this->convertImage($input_path);
         $input_name = basename($input_path);
 
         $response['data'] = route('show.file', [
