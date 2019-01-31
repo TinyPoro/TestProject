@@ -162,6 +162,50 @@ class MultipartController extends Controller
         return response()->json($response);
     }
 
+    public function uploadMedia2(Request $request){
+        $response = [
+            'data' => '',
+            'message' => ""
+        ];
+
+        $resource = $request->get('file');
+
+        if(!$resource) {
+            $response['message'] = "No resource received!";
+
+            return response()->json($response);
+        }
+
+        $type = $request->get('type');
+        $id = $request->get('id');
+
+        if(!$id) {
+            $response['message'] = "No id received!";
+
+            return response()->json($response);
+        }
+
+        $dir = $this->getDir($type, $id);
+
+        $media_content = $resource;
+
+        $input_path = $this->newTmp($media_content, $dir);
+        $input_path = $this->renameImage($input_path);
+        $input_path = $this->convertImage($input_path);
+        $input_path = $this->removeWatermark($input_path);
+        $input_path = $this->convertImage($input_path);
+        $input_name = basename($input_path);
+
+        $response['data'] = route('show.file', [
+            'type' => $type,
+            'id' => $id,
+            'name' => $input_name
+        ]);
+        $response['message'] = "OK";
+
+        return response()->json($response);
+    }
+
     function convertImage($originalImage, $quality = 100)
     {
         $ext = exif_imagetype($originalImage);
